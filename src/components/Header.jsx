@@ -1,8 +1,14 @@
+import { useContext } from "react";
 import { Badge, Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { BsCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { CartContext } from "../store/cart-context";
 
 export default function Header() {
+    const cart = useContext(CartContext);
+
+    console.log(cart);
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
@@ -27,9 +33,9 @@ export default function Header() {
                         </NavDropdown>
                     </Nav>
                     <Link to='/login' className="me-3 nav-link">Login</Link>
-                    <Button variant="success">
+                    <Button variant="success" onClick={cart.showCart} >
                         <BsCartFill className="me-2" />
-                        Cart <Badge bg="secondary">0</Badge>
+                        Cart <Badge bg="secondary">{cart.totalQuantity}</Badge>
                     </Button>
                 </Navbar.Collapse>
             </Container>

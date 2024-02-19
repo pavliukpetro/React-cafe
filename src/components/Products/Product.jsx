@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { toast } from 'react-toastify';
+import { CartContext } from "../../store/cart-context";
 
 export default function Product({ product }) {
     const [productQty, setProductQty] = useState(1);
+    const cart = useContext(CartContext);
 
-    function handleSubmit() {
+    function handleSubmit(e) {
         // console.log(productQty, product);
-        console.log('Add product to Cart');
+        e.preventDefault();
+
+        const addedProduct = {
+            ...product,
+            qty: productQty
+        };
+
+        cart.addItem(addedProduct);
 
         toast.success(`${productQty} ${product.name} ${productQty > 1 ? 'are' : 'is'} added to cart`, {
 
