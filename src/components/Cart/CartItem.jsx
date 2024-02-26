@@ -1,6 +1,14 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store";
 
 export default function CartItem({ item }) {
+    const dispatch = useDispatch();
+
+    function handleDelete() {
+        dispatch(cartActions.removeItem(item));
+    }
+
     return (
         <Card className="mb-3">
             <Card.Body>
@@ -18,7 +26,7 @@ export default function CartItem({ item }) {
                     </Col>
                     <Col sm={3}>
                         <Card.Text>
-                            <Button variant="danger">Delete</Button>
+                            <Button variant="danger" onClick={handleDelete}>Delete</Button>
                         </Card.Text>
                     </Col>
                 </Row>

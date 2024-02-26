@@ -1,13 +1,21 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Badge, Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { BsCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { CartContext } from "../store/cart-context";
+// import { CartContext } from "../store/cart-context";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../store";
 
 export default function Header() {
-    const cart = useContext(CartContext);
+    // const cart = useContext(CartContext);
+    const cart = useSelector(state => state.cart);
+    const dispatch = useDispatch();
 
     console.log(cart);
+
+    function handleShowCart() {
+        dispatch(cartActions.show());
+    }
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -33,7 +41,7 @@ export default function Header() {
                         </NavDropdown>
                     </Nav>
                     <Link to='/login' className="me-3 nav-link">Login</Link>
-                    <Button variant="success" onClick={cart.showCart} >
+                    <Button variant="success" onClick={handleShowCart} >
                         <BsCartFill className="me-2" />
                         Cart <Badge bg="secondary">{cart.totalQuantity}</Badge>
                     </Button>

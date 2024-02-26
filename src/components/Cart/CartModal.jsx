@@ -1,15 +1,20 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Modal } from "react-bootstrap";
-import { CartContext } from "../../store/cart-context";
+// import { CartContext } from "../../store/cart-context";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store";
 
 function CartModal() {
-    const cart = useContext(CartContext);
+    // const cart = useContext(CartContext);
+    const cart = useSelector(state => state.cart);
+    const dispatch = useDispatch();
 
     function handleHideModal() {
         // call method from context Api
-        cart.hideCart();
+        // cart.hideCart();
+        dispatch(cartActions.hide());
     }
 
     return (

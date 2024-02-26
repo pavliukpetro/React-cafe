@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { toast } from 'react-toastify';
-import { CartContext } from "../../store/cart-context";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store";
+// import { CartContext } from "../../store/cart-context";
 
 export default function Product({ product }) {
     const [productQty, setProductQty] = useState(1);
-    const cart = useContext(CartContext);
+
+    // const cart = useContext(CartContext);
+    // const cart = useSelector(state => state.cart);
+    const dispatch = useDispatch();
 
     function handleSubmit(e) {
         // console.log(productQty, product);
@@ -16,11 +20,8 @@ export default function Product({ product }) {
             qty: productQty
         };
 
-        cart.addItem(addedProduct);
-
-        toast.success(`${productQty} ${product.name} ${productQty > 1 ? 'are' : 'is'} added to cart`, {
-
-        });
+        // cart.addItem(addedProduct);
+        dispatch(cartActions.addItem(addedProduct));
     }
 
     return (
