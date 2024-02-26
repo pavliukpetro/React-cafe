@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Product from "./Product";
 import { Spinner } from "react-bootstrap";
+import { database } from "../../store/firebase";
 
 const DB_URL = 'https://react-cafe-d4119-default-rtdb.europe-west1.firebasedatabase.app';
 

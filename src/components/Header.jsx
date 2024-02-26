@@ -9,6 +9,7 @@ import { cartActions } from "../store";
 export default function Header() {
     // const cart = useContext(CartContext);
     const cart = useSelector(state => state.cart);
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     console.log(cart);
@@ -40,7 +41,8 @@ export default function Header() {
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Link to='/login' className="me-3 nav-link">Login</Link>
+                    {user.isLoggedIn && user.email}
+                    {!user.isLoggedIn && <Link to='/login' className="me-3 nav-link">Login</Link>}
                     <Button variant="success" onClick={handleShowCart} >
                         <BsCartFill className="me-2" />
                         Cart <Badge bg="secondary">{cart.totalQuantity}</Badge>
