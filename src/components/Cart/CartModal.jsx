@@ -4,12 +4,23 @@ import { Modal } from "react-bootstrap";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../../store";
+import { cartActions, userActions } from "../../store";
+import { useEffect } from "react";
 
 function CartModal() {
     // const cart = useContext(CartContext);
     const cart = useSelector(state => state.cart);
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            console.log('cart is updated');
+            console.log(cart);
+            // sendCartToDB()
+            dispatch(userActions.sendCartToDB(cart));
+        }
+    }, [cart]);
 
     function handleHideModal() {
         // call method from context Api

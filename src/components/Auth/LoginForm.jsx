@@ -5,6 +5,7 @@ import { auth } from '../../store/firebase';
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userActions } from '../../store';
+import { useNavigate } from 'react-router-dom';
 
 const validateForm = (values) => {
     const errors = {};
@@ -26,6 +27,7 @@ const validateForm = (values) => {
 
 export default function LoginForm() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -45,6 +47,8 @@ export default function LoginForm() {
                     console.log(user);
 
                     dispatch(userActions.setActiveuser(user));
+
+                    navigate('/');
 
                     toast.success(`Welcome back!`, {});
                 })

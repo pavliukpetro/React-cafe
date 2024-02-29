@@ -43,6 +43,17 @@ export const cartSlice = createSlice({
         },
         hide(state) {
             state.isCartVisible = false;
+        },
+        clear(state) {
+            state.items = [];
+            state.totalQuantity = 0;
+            state.totalAmount = 0;
+        },
+        restoreUserCart(state, action) {
+            const cart = action.payload;
+            state.items = cart.items || [];
+            state.totalQuantity = cart.totalQuantity;
+            state.totalAmount = cart.totalAmount;
         }
     }
 });

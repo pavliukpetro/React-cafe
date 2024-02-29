@@ -1,8 +1,13 @@
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../../store/firebase';
 import { toast } from "react-toastify";
+import { userActions } from '../../store';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ref, set } from "firebase/database";
+import { database } from '../../store/firebase';
 
 const validateForm = (values) => {
     const errors = {};
@@ -27,6 +32,9 @@ const validateForm = (values) => {
 }
 
 export default function SignUpForm() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             // values
@@ -42,17 +50,35 @@ export default function SignUpForm() {
                 .then((userCredential) => {
                     // Signed up 
                     const user = userCredential.user;
-                    // ...
-                    console.log(user);
+
+                    // Update User name in Firebase Auth
+                    updateProfile(auth.currentUser, {
+                        displayName: values.name
+                    }).then(() => {
+                        // Profile updated!
+                        console.log('Profile updated!');
+                        dispatch(userActions.setActiveuser(user));
+                    }).catch((error) => {
+                        // An error occurred
+                        toast.danger(`User is not updated`, {});
+                    });
+
+                    // Create User in DB
+                    set(ref(database, 'users/' + user.uid), {
+                        name: values.name,
+                        email: values.email,
+                        uid: user.uid,
+                        orders: {},
+                        cart: {}
+                    });
+
+                    navigate('/');
 
                     toast.success(`User is created`, {});
 
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
                     const errorMessage = error.message;
-                    // ..
-                    console.log(errorMessage);
                     toast.error(`${errorMessage}`, {});
                 });
         }

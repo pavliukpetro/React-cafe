@@ -4,7 +4,8 @@ import { BsCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 // import { CartContext } from "../store/cart-context";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../store";
+import { cartActions } from "../../store";
+import HeaderUser from "./HeaderUser";
 
 export default function Header() {
     // const cart = useContext(CartContext);
@@ -12,7 +13,7 @@ export default function Header() {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    console.log(cart);
+    // console.log(cart);
 
     function handleShowCart() {
         dispatch(cartActions.show());
@@ -41,7 +42,7 @@ export default function Header() {
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    {user.isLoggedIn && user.email}
+                    {user.isLoggedIn && <HeaderUser user={user} />}
                     {!user.isLoggedIn && <Link to='/login' className="me-3 nav-link">Login</Link>}
                     <Button variant="success" onClick={handleShowCart} >
                         <BsCartFill className="me-2" />

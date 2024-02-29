@@ -18,7 +18,7 @@ export default function Products() {
 
             const responseData = await response.json();
 
-            console.log(responseData);
+            // console.log(responseData);
 
             const loadedProducts = [];
 
