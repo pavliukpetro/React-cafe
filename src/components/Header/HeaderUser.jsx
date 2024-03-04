@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { cartActions, userActions } from "../../store";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function HeaderUser({ user }) {
     const dispatch = useDispatch();
@@ -29,9 +30,8 @@ export default function HeaderUser({ user }) {
         >
             <NavDropdown.Header>Welcome, {user.name ? user.name : 'Jonh Doe'}!</NavDropdown.Header>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="/account">Account</NavDropdown.Item>
-            <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+            <Link to="/account" className="dropdown-item">Account</Link>
+            <Link to="/orders" className="dropdown-item">Orders</Link>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#" onClick={handleLogout}>Logout</NavDropdown.Item>
         </NavDropdown>
